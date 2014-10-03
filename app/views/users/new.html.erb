@@ -1,0 +1,35 @@
+<!-- New User sign up form -->
+<h1>Sign up</h1>
+
+<% if flash[:errors] %>
+  <% flash[:errors].each do |error| %>
+    <%= error %>
+  <% end %>
+
+  <br>
+  <br>
+
+<% end %>
+
+<form action="<%= users_url %>" method="POST">
+  <input type="hidden"
+         name="authenticity_token"
+         value="<%= form_authenticity_token %>">
+
+  <label for="user_email">Email</label>
+    <input type="text"
+           name="user[email]"
+           value="<%= @user.email %>"
+           id="user_email">
+
+  <br>
+
+  <label for="user_password">Password</label>
+    <input type="password"
+           name="user[password]"
+           id="user_password">
+
+  <br>
+
+  <button>Sign up!</button>
+</form>
