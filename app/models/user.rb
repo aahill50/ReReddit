@@ -16,6 +16,12 @@ class User < ActiveRecord::Base
     foreign_key: :author_id
   )
 
+  has_many(
+    :comments,
+    foreign_key: :author_id,
+    inverse_of: :author
+  )
+
   after_initialize do
     ensure_session_token
   end
