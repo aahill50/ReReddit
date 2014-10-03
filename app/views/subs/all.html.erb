@@ -1,0 +1,6 @@
+<h1>Welcome to ReReddit</h1>
+
+<% @subs.each do |sub| %>
+  <a href="<%= sub_url(sub) %>"><%= sub.title %></a>
+  <%= sub.description %><br>
+<% end %>

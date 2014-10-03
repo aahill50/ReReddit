@@ -1,0 +1,12 @@
+<strong><%= @sub.title %></strong><br>
+<%= @sub.description %><br>
+
+<% @sub.posts.each do |post| %>
+  <a href="<%= post.url.length > 0 ? post.url : post_url(post) %>"><%= post.title %></a>
+  <% if current_user == post.author %>
+    <a href="<%= edit_post_url(post) %>">Edit Post</a>
+  <% end %>
+  <br>
+<% end %>
+<a href="<%= new_sub_post_url(@sub) %>">Create a new post</a>
+<br>

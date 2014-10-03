@@ -5,6 +5,17 @@ class User < ActiveRecord::Base
   validates :email, :password_digest, :session_token, presence: true
   validates :password, length: {minimum: 6, allow_nil: true}
 
+  has_many(
+    :subs,
+    foreign_key: :moderator_id,
+    dependent: :destroy
+  )
+
+  has_many(
+    :posts,
+    foreign_key: :author_id
+  )
+
   after_initialize do
     ensure_session_token
   end
