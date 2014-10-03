@@ -7,4 +7,16 @@
   <a href="<%= edit_post_url(@post) %>">Edit Post</a>
 <% end %>
 
+<br>
+
+<label for=subs>Belongs to subs</label>
+<br>
+<ul>
+<% @post.subs.each do |sub| %>
+  <li>
+    <a href="<%= sub_url(sub) %>"><%= sub.title %></a>
+  </li>
+<% end %>
+</ul>
+
 <!--Need to add comments -->

@@ -10,10 +10,10 @@ class PostsController < ApplicationController
 
   def create
     @post = current_user.posts.new(post_params)
-    @post.sub_id = params[:sub_id]
+    @post.sub_ids = params[:post][:sub_ids]
     #Need to also create post sub entry
     if @post.save
-      redirect_to sub_url(@post.sub)
+      redirect_to post_url(@post)
     else
       flash.now[:errors] = @post.errors.full_messages
       render :new
@@ -25,8 +25,9 @@ class PostsController < ApplicationController
   end
 
   def update
+    @post.sub_ids = params[:post][:sub_ids]
     if @post.update(post_params)
-      redirect_to sub_url(@post.sub)
+      redirect_to post_url(@post)
     else
       flash.now[:errors] = @post.errors.full_messages
       render :edit

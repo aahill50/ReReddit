@@ -9,7 +9,7 @@
 <br>
 <br>
 
-<form action="<%= sub_posts_url(@sub) %>" method="POST">
+<form action="<%= posts_url %>" method="POST">
   <input type="hidden"
          name="authenticity_token"
          value="<%= form_authenticity_token %>">
@@ -37,6 +37,16 @@
          value="<%= @post.url %>">
 
   <br>
+
+  <label for="post_subs">Choose subs to post to</label><br>
+  <% Sub.all.each do |sub| %>
+    <input type="checkbox"
+           name="post[sub_ids][]"
+           id="post_sub_<%= sub.id %>"
+           value="<%= sub.id %>">
+    <label for="post_sub_<%= sub.id %>"><%= sub.title %></label>
+    <br>
+  <% end %>
 
   <button>Create Post!</button>
 </form>

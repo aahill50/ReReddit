@@ -39,5 +39,16 @@
 
   <br>
 
+  <label for="post_subs">Choose subs to post to</label><br>
+  <% Sub.all.each do |sub| %>
+    <input type="checkbox"
+           name="post[sub_ids][]"
+           <%= "checked" if @post.sub_ids.include?(sub.id) %>
+           id="post_sub_<%= sub.id %>"
+           value="<%= sub.id %>">
+    <label for="post_sub_<%= sub.id %>"><%= sub.title %></label>
+    <br>
+  <% end %>
+
   <button>Update Post!</button>
 </form>

@@ -5,7 +5,7 @@ class SubsController < ApplicationController
 
   before_filter only: [:edit, :update, :destroy] do
     unless @sub.moderator == current_user
-      render "You can't do that!", status: :forbidden
+      render text: "You can't do that!", status: :forbidden
     end
   end
 
