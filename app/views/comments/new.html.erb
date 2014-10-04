@@ -26,9 +26,11 @@
 				 name="comment[post_id]"
 				 value=<%= @comment.post.id %>>
 
- <input type="hidden"
-				 name="comment[parent_id]"
-				 value=<%= @parent.id %>>
+	<% if @parent %>
+	 <input type="hidden"
+					 name="comment[parent_id]"
+					 value=<%= @parent.id %>>
+	<% end %>
 
 <textarea name="comment[content]"></textarea>
 <br>

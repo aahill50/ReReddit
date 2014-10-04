@@ -8,17 +8,15 @@
 <a href="<%= new_post_comment_url(@post) %>">Post a comment</a>
 </p>
 
-<% @post.top_level_comments.each do |comment| %>
-      <strong><em><%= comment.author.email %> says:</em></strong>
-      <%= comment.content %>. . . . .
-      <%= distance_of_time_in_words(Time.now - comment.created_at) %> ago
-      <br>
+<ul>
+  <% @all_comments.each do |comment| %>
+      <% if comment.parent_comment_id.nil? %>
+        <% @comment = comment %>
+        <%= render "comments/comment", post: @post, comment: @comment %>
+      <% end %>
+  <% end %>
+</ul>
 
-      <a href="<%= new_post_comment_comment_url(@post, comment) %>">Reply</a>
-      <br>
-
-      <%= render "comments/comment", post: @post, parent: comment %>
-<% end %>
 
 <% if current_user == @post.author %>
   <a href="<%= edit_post_url(@post) %>">Edit Post</a>

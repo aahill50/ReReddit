@@ -35,6 +35,7 @@ class PostsController < ApplicationController
   end
 
   def show
+    @all_comments = @post.comments.includes(:author)
     render :show
   end
 

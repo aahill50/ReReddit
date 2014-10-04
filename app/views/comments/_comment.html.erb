@@ -1,15 +1,16 @@
+<strong><em><%= comment.author.email %> says:</em></strong>
+	<%= comment.content %><br><small><em>
+	<%= distance_of_time_in_words(Time.now - comment.created_at) %> ago
+	</small></em><br>
+
+	<a href="<%= new_post_comment_comment_url(@post, comment) %>">Reply</a>
+	<br><br>
+
+<% parent_id = comment.id %>
 <ul>
-	<% parent.child_comments.each do |comment| %>
-		<li>
-			<strong><em><%= comment.author.email %> says:</em></strong>
-      <%= comment.content %>. . . . .
-      <%= distance_of_time_in_words(Time.now - comment.created_at) %> ago
-      <br>
-
-      <a href="<%= new_post_comment_comment_url(@post, comment) %>">Reply</a>
-      <br><br>
-
-      <%= render "comments/comment", post: @post, parent: comment %>
-		</li>
+	<% @all_comments.each do |comment| %>
+		<% if comment.parent_comment_id == parent_id  %>
+			<%= render "comments/comment", post: @post, comment: comment %>
+		<% end %>
 	<% end %>
 </ul>
