@@ -1,0 +1,45 @@
+<h1>Add a comment</h1>
+<h2>Sub - <%= @comment.sub.title %></h2>
+<h3>Post - <%= @comment.post.title %></h3>
+<% unless @parent.nil? %>
+	<strong><em><%= @parent.author.email %> says:</em></strong>
+      <%= @parent.content %>. . . . .
+      <%= distance_of_time_in_words(Time.now - @parent.created_at) %> ago
+      <br>
+      <br>
+<% end %>
+
+<% if flash[:errors] %>
+<ul>
+	<% flash[:errors].each do |error| %>
+		<li><%= error %></li>
+	<% end %>
+</ul>
+<% end %>
+
+<form action="<%= comments_url %>" method="POST">
+	<input type="hidden"
+				 name="authenticity_token"
+				 value="<%= form_authenticity_token %>">
+	
+	<input type="hidden"
+				 name="comment[post_id]"
+				 value=<%= @comment.post.id %>>
+
+ <input type="hidden"
+				 name="comment[parent_id]"
+				 value=<%= @parent.id %>>
+
+<textarea name="comment[content]"></textarea>
+<br>
+<button>Submit comment!</button>
+</form>
+
+<p>
+	<% @comment.post.top_level_comments.each do |comment| %>
+	      <strong><em><%= comment.author.email %> says:</em></strong>
+	      <%= comment.content %>. . . . .
+	      <%= distance_of_time_in_words(Time.now - comment.created_at) %> ago
+	      <br>
+	<% end %>
+</p>

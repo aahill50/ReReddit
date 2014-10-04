@@ -1,0 +1,15 @@
+<ul>
+	<% parent.child_comments.each do |comment| %>
+		<li>
+			<strong><em><%= comment.author.email %> says:</em></strong>
+      <%= comment.content %>. . . . .
+      <%= distance_of_time_in_words(Time.now - comment.created_at) %> ago
+      <br>
+
+      <a href="<%= new_post_comment_comment_url(@post, comment) %>">Reply</a>
+      <br><br>
+
+      <%= render "comments/comment", post: @post, parent: comment %>
+		</li>
+	<% end %>
+</ul>

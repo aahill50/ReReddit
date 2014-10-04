@@ -1,5 +1,5 @@
 class Comment < ActiveRecord::Base
-  validate :content, :author_id, :post_id, presence: true
+  validates :content, :author_id, :post_id, presence: true
 
   belongs_to(
     :author,
@@ -16,5 +16,11 @@ class Comment < ActiveRecord::Base
   belongs_to(:parent_comment,
     class_name: "Comment",
     foreign_key: :parent_comment_id
+  )
+
+  has_one(
+    :sub,
+    through: :post,
+    source: :subs
   )
 end

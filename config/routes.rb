@@ -8,8 +8,10 @@ RedditClone::Application.routes.draw do
 
   resources :subs, only: [:create, :show, :edit, :update]
   resources :posts, only: [:new, :create, :show, :edit, :update] do
-    resources :comments, only: [:create]
+    resources :comments, only: [:new] do
+      resources :comments, only: [:new]
+    end
   end
 
-  post 'comments/:id', to: 'comments#create_child', as: 'new_child_comment'
+  post 'comments', to: 'comments#create'
 end
