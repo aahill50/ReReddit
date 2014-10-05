@@ -16,4 +16,13 @@ class Post < ActiveRecord::Base
     foreign_key: :post_id
   )
 
+  def comments_by_parent_id
+    comment_tree = Hash.new { |h, key| h[key] = [] }
+
+    comments.each do |comment|
+      comment_tree[comment.parent_comment_id] << comment
+    end
+
+    comment_tree
+  end
 end

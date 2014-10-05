@@ -1,3 +1,4 @@
+<% comment = Comment.find(parent_id) %>
 <strong><em><%= comment.author.email %> says:</em></strong>
 	<%= comment.content %><br><small><em>
 	<%= distance_of_time_in_words(Time.now - comment.created_at) %> ago
@@ -6,11 +7,11 @@
 	<a href="<%= new_post_comment_comment_url(@post, comment) %>">Reply</a>
 	<br><br>
 
-<% parent_id = comment.id %>
+<% children = @post.comments_by_parent_id[comment.id] %>
 <ul>
-	<% @all_comments.each do |comment| %>
-		<% if comment.parent_comment_id == parent_id  %>
-			<%= render "comments/comment", post: @post, comment: comment %>
-		<% end %>
-	<% end %>
+  <% children.each do |comment| %>
+    <%= render "comments/comment", 
+      post: @post,
+      parent_id: comment.id %>
+  <% end %>
 </ul>

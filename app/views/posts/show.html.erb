@@ -8,15 +8,13 @@
 <a href="<%= new_post_comment_url(@post) %>">Post a comment</a>
 </p>
 
-<ul>
   <% @all_comments.each do |comment| %>
-      <% if comment.parent_comment_id.nil? %>
-        <% @comment = comment %>
-        <%= render "comments/comment", post: @post, comment: @comment %>
-      <% end %>
+    <% if comment.parent_comment_id.nil? %>
+      <%= render "comments/comment", 
+        post: @post,
+        parent_id: comment.id %>
+    <% end %>
   <% end %>
-</ul>
-
 
 <% if current_user == @post.author %>
   <a href="<%= edit_post_url(@post) %>">Edit Post</a>
