@@ -4,5 +4,9 @@
 
 <% @subs.each do |sub| %>
   <a href="<%= sub_url(sub) %>"><%= sub.title %></a>
-  <%= sub.description %><br>
+  <%= sub.description %>
+	<% if current_user.id == sub.moderator_id %>
+  	<a href="<%= edit_sub_url(sub) %>">Edit</a>
+	<% end %>
+  <br>
 <% end %>

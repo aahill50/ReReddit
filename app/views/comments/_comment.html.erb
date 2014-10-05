@@ -1,13 +1,27 @@
 <% comment = Comment.find(parent_id) %>
 <strong><em><%= comment.author.email %> says:</em></strong>
-	<%= comment.content %><br><small><em>
+	<%= comment.content %>
+	~ <%= comment.karma %> karma<br><small><em>
 	<%= distance_of_time_in_words(Time.now - comment.created_at) %> ago
 	</small></em><br>
 
 	<a href="<%= new_post_comment_comment_url(@post, comment) %>">Reply</a>
+	<form action="<%= comment_up_url(comment) %>" method="POST">
+		<input type="hidden"
+					 name="authenticity_token"
+					 value="<%= form_authenticity_token %>">
+		<button>^</button>
+	</form>
+	<form action="<%= comment_down_url(comment) %>" method="POST">
+		<input type="hidden"
+					 name="authenticity_token"
+					 value="<%= form_authenticity_token %>">
+		<button>v</button>
+	</form>
 	<br><br>
 
 <% children = @post.comments_by_parent_id[comment.id] %>
+<% children.sort! { |c1, c2| c2.karma <=> c1.karma } %>
 <ul>
   <% children.each do |comment| %>
     <%= render "comments/comment", 

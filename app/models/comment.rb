@@ -23,4 +23,13 @@ class Comment < ActiveRecord::Base
     through: :post,
     source: :subs
   )
+
+  has_many :votes, as: :votable
+
+  def karma
+    positive_karma = self.votes.where(value: 1).count
+    negative_karma = self.votes.where(value: -1).count
+
+    positive_karma - negative_karma
+  end
 end

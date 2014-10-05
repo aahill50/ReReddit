@@ -9,6 +9,7 @@ class Post < ActiveRecord::Base
   has_many :post_subs, inverse_of: :post, dependent: :destroy
   has_many :subs, through: :post_subs, source: :sub
   has_many :comments, inverse_of: :post
+  has_many :votes, as: :votable
 
   has_many(:top_level_comments,
     -> { where("parent_comment_id IS NULL") },
@@ -24,5 +25,12 @@ class Post < ActiveRecord::Base
     end
 
     comment_tree
+  end
+
+  def karma
+    positive_karma = self.votes.where(value: 1).count
+    negative_karma = self.votes.where(value: -1).count
+
+    positive_karma - negative_karma
   end
 end

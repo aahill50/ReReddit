@@ -1,10 +1,37 @@
 <strong><%= @sub.title %></strong><br>
 <%= @sub.description %><br>
-
-<% @sub.posts.each do |post| %>
+<% sub_posts = @sub.posts.sort {|p1, p2| p2.karma <=> p1.karma} %>
+<% sub_posts.each do |post| %>
   <a href="<%= post.url.length > 0 ? post.url : post_url(post) %>"><%= post.title %></a>
-  <% if current_user == post.author %>
-    <a href="<%= edit_post_url(post) %>">Edit Post</a>
+  <%= post.karma %> karma
+
+  <form action="<%= post_up_url(post) %>" method="POST">
+  	<input type="hidden"
+  				 name="authenticity_token"
+  				 value="<%= form_authenticity_token %>">
+  	
+  	<input type="hidden"
+  				 name="post[sub_id]"
+  				 value="<%= @sub.id %>">
+
+  	<button>^</button>
+  </form>
+
+  <form action="<%= post_down_url(post) %>" method="POST">
+
+  	<input type="hidden"
+  				 name="authenticity_token"
+  				 value="<%= form_authenticity_token %>">
+
+    <input type="hidden"
+  				 name="post[sub_id]"
+  				 value="<%= @sub.id %>">
+
+  	<button>v</button>
+  </form>
+
+  <% if current_user.id == post.author_id %>
+    <a href="<%= edit_post_url(post) %>">Edit</a>
   <% end %>
   <br>
 <% end %>

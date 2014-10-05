@@ -14,4 +14,8 @@ RedditClone::Application.routes.draw do
   end
 
   post 'comments', to: 'comments#create'
+  post 'comments/:id/upvote', to: 'comments#upvote', as: 'comment_up'
+  post 'posts/:id/upvote', to: 'posts#upvote', as: 'post_up'
+  post 'comments/:id/downvote', to: 'comments#downvote', as: 'comment_down'
+  post 'posts/:id/downvote', to: 'posts#downvote', as: 'post_down'
 end

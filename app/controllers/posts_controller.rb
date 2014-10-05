@@ -36,8 +36,25 @@ class PostsController < ApplicationController
 
   def show
     @all_comments = @post.comments.includes(:author)
+    @all_comments.sort! { |c1, c2| c2.karma <=> c1.karma }
     @comments_by_parent_id ||= @post.comments_by_parent_id
     render :show
+  end
+
+  def upvote
+    post = Post.find(params[:id])
+    post.votes.new(value: 1)
+    post.save!
+    sub = Sub.find(params[:post][:sub_id])
+    redirect_to sub_url(sub) 
+  end
+
+  def downvote
+    post = Post.find(params[:id])
+    post.votes.new(value: -1)
+    post.save!
+    sub = Sub.find(params[:post][:sub_id])
+    redirect_to sub_url(sub) 
   end
 
   private
